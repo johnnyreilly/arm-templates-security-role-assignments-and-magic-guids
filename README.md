@@ -172,4 +172,3 @@ Let's go through the above, significant property by significant property (it's a
 There is an alternate approach that you can use where the `type` is `"Microsoft.Authorization/roleAssignments"`. Whilst this also works, it displayed errors in the [Azure tooling for VS Code](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools).  As such, we've opted not to use that approach in our ARM templates.
 
 Many thanks to the awesome [John McCormick](https://github.com/jmccor99) who wrangled permissions with me until we bent Azure RBAC to our will. 
-
