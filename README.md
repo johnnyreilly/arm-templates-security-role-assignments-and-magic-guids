@@ -162,13 +162,14 @@ So now we understand how you identify the roles in question, let's take the fina
 
 Let's go through the above, significant property by significant property (it's also worth checking the official reference [here](https://docs.microsoft.com/en-us/azure/templates/microsoft.authorization/roleassignments)):
 
-- `type` - the type of role assignment we want to create, for a key vault it's `"Microsoft.KeyVault/vaults/providers/roleAssignments"`, for storage it's `"Microsoft.Storage/storageAccounts/providers/roleAssignments"`.  The pattern is that it's the resource type, followed by `"/providers/roleAssignments"`.   Alternatively you could just use `"Microsoft.Authorization/roleAssignments"`?
+- `type` - the type of role assignment we want to create, for a key vault it's `"Microsoft.KeyVault/vaults/providers/roleAssignments"`, for storage it's `"Microsoft.Storage/storageAccounts/providers/roleAssignments"`.  The pattern is that it's the resource type, followed by `"/providers/roleAssignments"`. 
 - `dependsOn` - before we can create a role assignment, we need the service principal we desire to permission (in our case a managed identity) to exist
 - `properties.roleDefinitionId` - the role that we're assigning, provided as an id. So for this example it's the `keyVaultCryptoOfficer` variable, which was earlier defined as `[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')]`. (Note the use of the GUID)
 - `properties.principalId` - the id of the principal we're adding permissions for. In our case this is a managed identity (a type of service principal).
 - `properties.scope` - we're modifying another resource; our key vault isn't defined in this ARM template and we want to specify the resource we're granting permissions to.
 - `properties.principalType` - the type of principal that we're creating an assignment for; in our this is `"ServicePrincipal"` - our managed identity.
 
-[John McCormick](https://github.com/jmccor99)
+There is an alternate approach that you can use where the `type` is `"Microsoft.Authorization/roleAssignments"`. Whilst this also works, it displayed errors in the [Azure tooling for VS Code](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools).  
 
-**The thing that's curious is that no documentation I've found seems to use the `"Microsoft.KeyVault/vaults/providers/roleAssignments"` type approach; everything uses `"Microsoft.Authorization/roleAssignments"` - are we following an old pattern that we should avoid promoting?**
+Many thanks to the awesome [John McCormick](https://github.com/jmccor99) who wrangled permissions with me until we bent Azure RBAC to our will. 
+
